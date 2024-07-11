@@ -1,34 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {
+  Background,
+  Controls,
+  MiniMap,
+  ReactFlow,
+  useEdgesState,
+  useNodesState
+} from '@xyflow/react'
+import '@xyflow/react/dist/style.css'
 import './App.css'
+import { initialEdges } from './edges'
+import { initialNodes, nodeTypes } from './nodes'
 
 function App () {
-  const [count, setCount] = useState(0)
+  const [nodes] = useNodesState(initialNodes)
+  const [edges] = useEdgesState(initialEdges)
 
   return (
-    <>
-      <div>
-        <a href='https://vitejs.dev' target='_blank' rel='noreferrer'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank' rel='noreferrer'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
+    <div className='w-full h-screen bg-gray-200 flex flex-row'>
+      <div className='w-1/4 min-w-96 h-full flex flex-col border-r border-gray-300 bg-white'>
+        <h1 className='text-3xl font-bold px-8 py-4 mb-2'>React Flow Example</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className='w-full h-full flex-1'>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          fitView
+        >
+          <Background />
+          <Controls />
+          <MiniMap />
+        </ReactFlow>
       </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
